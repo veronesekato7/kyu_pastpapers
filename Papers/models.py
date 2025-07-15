@@ -10,8 +10,17 @@ class University(models.Model):
  #Department under university second   
 class Department(models.Model):
     name = models.ForeignKey(University,on_delete = models.CASCADE,related_name='departments')
-    def __str__(self):
-        return f"{self.name} ({self.university.name})"
+    #def __str__(self):
+   #     return f"{self.name} ({self.university.name})"
+    
+    def get_university(self, obj):
+        # Example: if Department has related Course, and Course has University
+        return obj.course.university.name if obj.course and obj.course.university else 'N/A'
+    get_university.short_description = 'University'
+    
+
+
+
 
 #Course under university third    
 class Course(models.Model):
